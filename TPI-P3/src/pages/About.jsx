@@ -1,5 +1,5 @@
 export default function About() {
     return (
-    <h1>Acerca de Nosotros</h1>
+        <h1>Acerca de Nosotros</h1>
     );
 }
