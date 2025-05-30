@@ -21,7 +21,7 @@ try {
         next();
     });
     app.listen(PORT);
-    app.use(authRoutes);
+    app.use('/api/auth', authRoutes);
 
     await sequelize.sync();
 
