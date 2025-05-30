@@ -21,36 +21,47 @@ export const Register = () => {
     }
 
     const handleSubmit = async (e) => {
-  e.preventDefault();
-  const validationsErrors = Validations(formData);
+        e.preventDefault();
+        const validationsErrors = Validations(formData);
 
-  if (Object.keys(validationsErrors).length > 0) {
-    setErrors(validationsErrors);
-  } else {
-    try {
-      const response = await fetch("http://localhost:3000/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
-      });
+    if (Object.keys(validationsErrors).length > 0) {
+        setErrors(validationsErrors);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        alert("Error: " + errorData.message); // Mostrar error del backend si existe
+        if (validationsErrors.name) {
+            nameRef.current.focus();
+        } else if (validationsErrors.email) {
+            emailRef.current.focus();
+        } else if (validationsErrors.password) {
+            passwordRef.current.focus();
+        }
+
         return;
-      }
 
-      // Si todo salió bien, redirige al login
-      setTimeout(() => {
-        navigate('/login');
-      }, 500);
-    } catch (error) {
-      console.error("Error en el registro:", error);
-      alert("Hubo un problema con el servidor");
+    } else {
+        setErrors({});
+        try {
+        const response = await fetch("http://localhost:3000/api/auth/register", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert("Error: " + errorData.message);
+            return;
+        }
+
+        setTimeout(() => {
+            navigate('/login');
+        }, 500);
+        } catch (error) {
+        console.error("Error en el registro:", error);
+        alert("Hubo un problema con el servidor");
+        }
     }
-  }
 }
 
   return (
