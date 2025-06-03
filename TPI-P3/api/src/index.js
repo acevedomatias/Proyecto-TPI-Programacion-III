@@ -4,12 +4,12 @@ import cors from "cors";
 import { PORT } from "./config.js"
 import { sequelize } from "./db.js";
 
-import authRoutes from "../routes/auth.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 // import userRoutes from "../routes/user.routes.js";
 
 import "./models/User.js";
-// import "./models/Cabin.js";
-// import "./models/Reservation.js";
+import "./models/Cabin.js";
+import "./models/Reservation.js";
 
 const app = express();
 

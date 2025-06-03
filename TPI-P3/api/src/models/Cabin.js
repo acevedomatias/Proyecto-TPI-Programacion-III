@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../../db.js";
+import { sequelize } from "../db.js";
 
 export const Cabin = sequelize.define("cabin", {
     id: {
@@ -12,20 +12,17 @@ export const Cabin = sequelize.define("cabin", {
         allowNull: false,
     },
     description: {
-    type: DataTypes.TEXT,
+        type: DataTypes.TEXT,
     },
     pricePerNight: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false,
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
     },
     capacity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
+        type: DataTypes.INTEGER,
+        allowNull: false,
     },
-    imageUrl: {
-        type: DataTypes.STRING,
-    },
-    available: {
+    isAvaiable: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
     }

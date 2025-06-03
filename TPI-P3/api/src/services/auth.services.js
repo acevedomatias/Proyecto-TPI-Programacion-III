@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../src/models/User.js"
+import { User } from "../models/User.js"
 import { validateEmail, validatePassword, validateString } from "../helpers/validations.js";
 
 export const verifyToken = (req, res, next) => {
@@ -14,6 +14,7 @@ export const verifyToken = (req, res, next) => {
 
     try {
         const payload = jwt.verify(token, 'cabañasTPI');
+        req.user = payload;
         console.log(payload);
         next();
     } catch (error) {
