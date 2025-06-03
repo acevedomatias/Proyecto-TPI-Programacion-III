@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 import { PORT } from "./config.js"
 import { sequelize } from "./db.js";
@@ -14,16 +15,18 @@ const app = express();
 
 try {
     app.use(express.json());
-    app.use((req, res, next) => {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "*");
-        res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-        next();
-    });
-    app.listen(PORT);
+
+    // configuracion del cors 
+    app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+    }));
+    
     app.use('/api/auth', authRoutes);
 
     await sequelize.sync();
+    
+    app.listen(PORT);
 
     console.log(`Server listening on port ${PORT}`);
 } catch (error) {

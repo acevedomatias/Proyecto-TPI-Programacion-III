@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Validations } from "../utils/Validations";
+import { validateRegister } from "../utils/ValidationsRegister";
 import { useNavigate } from "react-router-dom";
 
 
@@ -22,47 +22,45 @@ export const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const validationsErrors = Validations(formData);
+        const validationsErrors = validateRegister(formData);
 
-    if (Object.keys(validationsErrors).length > 0) {
-        setErrors(validationsErrors);
+        if (Object.keys(validationsErrors).length > 0) {
+            setErrors(validationsErrors);
 
-        if (validationsErrors.name) {
-            nameRef.current.focus();
-        } else if (validationsErrors.email) {
-            emailRef.current.focus();
-        } else if (validationsErrors.password) {
-            passwordRef.current.focus();
-        }
-
-        return;
-
-    } else {
-        setErrors({});
-        try {
-        const response = await fetch("http://localhost:3000/api/auth/register", {
-            method: "POST",
-            headers: {
-            "Content-Type": "application/json"
-            },
-            body: JSON.stringify(formData)
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            alert("Error: " + errorData.message);
+            if (validationsErrors.name) {
+                nameRef.current.focus();
+            } else if (validationsErrors.email) {
+                emailRef.current.focus();
+            } else if (validationsErrors.password) {
+                passwordRef.current.focus();
+            }
             return;
-        }
+        } else {
+            setErrors({});
+            try {
+                const response = await fetch("http://localhost:3000/api/auth/register", {
+                    method: "POST",
+                    headers: {
+                    "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+            });
 
-        setTimeout(() => {
-            navigate('/login');
-        }, 500);
-        } catch (error) {
-        console.error("Error en el registro:", error);
-        alert("Hubo un problema con el servidor");
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert("Error: " + errorData.message);
+                return;
+            }
+
+            setTimeout(() => {
+                navigate('/login');
+            }, 500);
+            } catch (error) {
+            console.error("Error en el registro:", error);
+            alert("Hubo un problema con el servidor");
+            }
         }
     }
-}
 
   return (
     <form onSubmit={handleSubmit}>
@@ -104,3 +102,5 @@ export const Register = () => {
     </form>
   )
 }
+
+export default Register;

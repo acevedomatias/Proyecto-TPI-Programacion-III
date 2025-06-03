@@ -13,7 +13,7 @@ export const verifyToken = (req, res, next) => {
     }
 
     try {
-        const payload = jwt.verify(token, 'programacion3-2025');
+        const payload = jwt.verify(token, 'cabañasTPI');
         console.log(payload);
         next();
     } catch (error) {
@@ -53,6 +53,8 @@ export const registerUser = async (req, res) => {
 
 
 export const loginUser = async (req, res) => {
+
+     console.log("Login recibido:", req.body);
 
     const result = validateLoginUser(req.body);
 

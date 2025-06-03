@@ -1,5 +1,5 @@
 
-export const Validations = (data) => {
+export const validateRegister  = (data) => {
   const errors = {};
   if (!data.name.trim()) {
     errors.name = "El nombre es obligatorio";
