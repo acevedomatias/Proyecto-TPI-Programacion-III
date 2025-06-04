@@ -1,17 +1,29 @@
-import { Link } from "react-router-dom";
+import { Container, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-export const PublicHome = () => {
+function PublicHome() {
   return (
-    <div>
-        <h1>Bienvenido a EcoCabañas</h1>
+    <Container
+      className="d-flex flex-column justify-content-center align-items-center"
+      style={{ minHeight: '100vh' }}
+    >
+      <h1 className="mb-4 text-center fs-1">Bienvenido a EcoCabañas</h1>
+
+      <h3 className="text-center mb-4 fs-4">
+        Descubrí la tranquilidad de la naturaleza. Alquilá tu cabaña ideal.
+      </h3>
+
+      <div className="d-flex gap-3">
         <Link to="/login">
-            <button>Iniciar Sesión</button>
+          <Button variant="primary">Iniciar Sesión</Button>
         </Link>
-        <Link to="/register" style={{ marginLeft: 10 }}>
-            <button>Registrarse</button>
+
+        <Link to="/register">
+          <Button variant="success">Registrarse</Button>
         </Link>
-    </div>
-  )
+      </div>
+    </Container>
+  );
 }
 
 export default PublicHome;

@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { validateRegister } from "../utils/ValidationsRegister";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
+import { Form, Button, Card, Container } from 'react-bootstrap';
 
 
 export const Register = () => {
@@ -63,43 +65,70 @@ export const Register = () => {
     }
 
   return (
-    <form onSubmit={handleSubmit}>
-        <div>
-            <input
+    <Container
+      className="d-flex justify-content-center align-items-center"
+      style={{ minHeight: '100vh' }}
+    >
+        <div className="position-absolute top-0 start-0 m-4">
+            <Link to="/" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
+        </div>
+
+      <Card style={{ width: '100%', maxWidth: '800px' }} className="shadow p-4">
+        <Card.Body>
+          <h2 className="text-center mb-4 fs-3">Registro</h2>
+
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3" controlId="formName">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
                 name="name"
                 placeholder="Nombre"
-                required
                 value={formData.name}
                 onChange={handleChange}
-                ref={nameRef}    
-            />
-            { errors.name && <p style={{color:"red"}}>{errors.name}</p>}
-        </div>
-        <div>
-            <input
+                ref={nameRef}
+              />
+              {errors.name && (
+                <Form.Text className="text-danger">{errors.name}</Form.Text>
+              )}
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
                 name="email"
                 placeholder="Ingresar email"
-                required
                 value={formData.email}
                 onChange={handleChange}
                 ref={emailRef}
-            />
-            { errors.email && <p style={{color: "red"}}>{errors.email}</p> }
-        </div>
-        <div>
-            <input 
+              />
+              {errors.email && (
+                <Form.Text className="text-danger">{errors.email}</Form.Text>
+              )}
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="formPassword">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
                 type="password"
                 name="password"
                 placeholder="Ingresar contraseña"
-                required
                 value={formData.password}
                 onChange={handleChange}
                 ref={passwordRef}
-            />
-            { errors.password && <p style={{color: "red"}}>{errors.password}</p> }
-        </div>
-        <button type="submit">Registrarse</button>
-    </form>
+              />
+              {errors.password && (
+                <Form.Text className="text-danger">{errors.password}</Form.Text>
+              )}
+            </Form.Group>
+
+            <Button variant="success" type="submit" className="w-100">
+              Registrarse
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </Container>
   )
 }
 

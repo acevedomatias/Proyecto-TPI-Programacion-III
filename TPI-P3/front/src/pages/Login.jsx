@@ -5,7 +5,7 @@ import { validateLogin } from "../utils/ValidationsLogin";
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
 
 
-export const Login = () => {
+export const Login = ({ setIsLogged }) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({ email: false, password: false});
     const emailRef = useRef(null);
@@ -52,8 +52,9 @@ export const Login = () => {
 
                 const token = await response.json();
                 localStorage.setItem("token", token);
+                setIsLogged(true);
                 alert("Inicio de sesión exitoso");
-                navigate("/home");
+                navigate("/Dashboard");
             } catch (error) {
                 console.error("Error al hacer login:", error);
                 alert("Ocurrió un error inesperado");
@@ -66,7 +67,11 @@ export const Login = () => {
             className="d-flex justify-content-center align-items-center"
             style={{ height: '100vh', width: '100vh' }}
         >
-            <Card style={{ width: '100%', maxWidth: '400px' }} className="shadow">
+            <div className="position-absolute top-0 start-0 m-4">
+                <Link to="/" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
+            </div>
+
+            <Card style={{ width: '100%', maxWidth: '800px', maxHeight: '500px' }} className="shadow">
                 <Card.Body>
                     <h2 className="text-center mb-4">Iniciar Sesión</h2>
 
@@ -74,10 +79,8 @@ export const Login = () => {
                         <Form.Group className="mb-3" controlId="formEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
-                                type="email"
                                 name="email"
                                 placeholder="Ingresar email"
-                                required
                                 ref={emailRef}
                                 onChange={handleChange}
                                 value={formData.email}
