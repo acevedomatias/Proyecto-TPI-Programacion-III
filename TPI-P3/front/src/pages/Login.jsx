@@ -1,13 +1,15 @@
 import { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { validateLogin } from "../utils/ValidationsLogin";
+import { jwtDecode } from "jwt-decode";
 
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap';
+import { Form, Button, Card, Container} from 'react-bootstrap';
 
 
-export const Login = ({ setIsLogged }) => {
+export const Login = ({ setIsLogged, setUserRole }) => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [errors, setErrors] = useState({ email: false, password: false});
+
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
 
@@ -52,6 +54,11 @@ export const Login = ({ setIsLogged }) => {
 
                 const token = await response.json();
                 localStorage.setItem("token", token);
+
+                //extrae el rol desde el token
+                const decoded = jwtDecode(token);
+                setUserRole(decoded.role);
+
                 setIsLogged(true);
                 alert("Inicio de sesión exitoso");
                 navigate("/Dashboard");
