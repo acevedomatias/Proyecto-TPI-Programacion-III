@@ -3,7 +3,7 @@ import { sequelize } from "../db.js";
 import { User } from "./User.js";
 import { Cabin } from "./Cabin.js";
 
-export const Reservation = sequelize.define("reservation", {
+export const Booking = sequelize.define("booking", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -24,14 +24,14 @@ export const Reservation = sequelize.define("reservation", {
 }, { timestamps: false });
 
 // relaciones
-User.hasMany(Reservation, {
+User.hasMany(Booking, {
   foreignKey: "userId",
   onDelete: "CASCADE",
 });
-Reservation.belongsTo(User, { foreignKey: "userId" });
+Booking.belongsTo(User, { foreignKey: "userId" });
 
-Cabin.hasMany(Reservation, {
+Cabin.hasMany(Booking, {
   foreignKey: "cabinId",
   onDelete: "CASCADE",
 });
-Reservation.belongsTo(Cabin, { foreignKey: "cabinId" });
+Booking.belongsTo(Cabin, { foreignKey: "cabinId" });

@@ -5,11 +5,11 @@ import { PORT } from "./config.js"
 import { sequelize } from "./db.js";
 
 import authRoutes from "./routes/auth.routes.js";
-// import userRoutes from "../routes/user.routes.js";
+import userRoutes from "./routes/user.routes.js";
 
 import "./models/User.js";
 import "./models/Cabin.js";
-import "./models/Reservation.js";
+import "./models/Booking.js";
 
 const app = express();
 
@@ -23,6 +23,7 @@ try {
     }));
     
     app.use('/api/auth', authRoutes);
+    app.use('/api/user', userRoutes);
 
     await sequelize.sync();
     

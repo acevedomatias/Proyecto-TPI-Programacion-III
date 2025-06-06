@@ -5,8 +5,11 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Protected from "./components/Protected";
 import Dashboard from "./pages/Dashboard";
-import Reservations from "./pages/Reservations";
+import UserBookings from "./pages/UserBookings";
 import AdminPanel from "./pages/AdminPanel";
+import AdminUsers from "./pages/AdminUsers";
+import AdminCabins from "./pages/AdminCabins";
+import AdminBookings from "./pages/AdminBookings";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -18,8 +21,11 @@ function App() {
         <Route path='/' element={<PublicHome />} />
         <Route path='/register' element={<Register />}/>
         <Route path='/login' element={<Login setIsLogged={setIsLogged} setUserRole={setUserRole} />}/>
-        <Route path='/reservations' element={<Reservations />}/>
+        <Route path='/bookings' element={<UserBookings />}/>
         <Route path='/adminPanel' element={<AdminPanel />}/>
+        <Route path='/adminUsers' element={<AdminUsers />}/>
+        <Route path='/adminCabins' element={<AdminCabins />}/>
+        <Route path='/adminBookings' element={<AdminBookings />}/>
 
         {/* <Route element={<Protected isLogged={isLogged}/>}> */}
           <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />

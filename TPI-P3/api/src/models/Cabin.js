@@ -25,5 +25,9 @@ export const Cabin = sequelize.define("cabin", {
     isAvaiable: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-    }
+    },
+    imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
 }, { timestamps: false });
