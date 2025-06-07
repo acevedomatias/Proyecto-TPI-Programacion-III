@@ -22,7 +22,7 @@ export const Cabin = sequelize.define("cabin", {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    isAvaiable: {
+    isAvailable: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
     },

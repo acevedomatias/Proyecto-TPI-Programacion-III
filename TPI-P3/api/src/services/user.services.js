@@ -8,15 +8,6 @@ export const getAllUsers = async (req, res) => {
    res.json(users);
 }
 
-export const getUserById = async (req, res) => {
-   const { id } = req.params;
-   const user = await User.findByPk(id);
-   if (!book) {
-        return res.status(404).send({message: "Usuario no encontrado"});
-   }
-   res.json(user);
-}
-
 export const updateUser = async (req, res) => {
     const { name, email, password, role } = req.body;
     const { id } = req.params;

@@ -4,11 +4,11 @@ export const AdminUsers = () => {
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
 
-        useEffect(() => {
+    useEffect(() => {
         fetch("http://localhost:3000/api/user")
         .then(res => res.json())
         .then(data => setUsers(data))
-        .catch(error => console.error("Error al traer usuarios:", error));
+        .catch(error => console.error("Error al obtener usuarios:", error));
     }, []);
 
     const handleDelete = async (id) => {
@@ -38,8 +38,10 @@ export const AdminUsers = () => {
             });
 
             if (!response.ok) {
-                throw new Error("Error al actualizar el usuario");
-            }
+                    const errorData = await response.json();
+                    alert("Error: " + errorData.message);
+                    return;
+                }
 
             //actualiza el array de usuarios local
             //si encuentra un user con el mismo id q estamos editando lo remplaza por el nuevo 
