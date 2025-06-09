@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import CustomNavbar from "../components/CustomNavbar ";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import naturalezaImg from '../assets/Naturaleza.png';
@@ -5,6 +6,20 @@ import comodidadImg from '../assets/Comodidad.png';
 import atencionImg from '../assets/Atencion.png';
 
 export const Dashboard = ( {userRole }) => {
+  const [cabins, setCabins] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/cabin")
+      .then((res) => res.json())
+      .then((data) => setCabins(data))
+      .catch((error) => console.error("Error al obtener cabañas:", error));
+  }, []);
+
+  const handleReserve = (cabinId) => {
+    // para mostrar un form o redirigir a un form de reserva
+    console.log("Reservar cabaña ID:", cabinId);
+  };
+
   return (
     <div>
       <CustomNavbar userRole={ userRole }/>
@@ -13,17 +28,22 @@ export const Dashboard = ( {userRole }) => {
         <Container>
           <h2 className="mb-4 text-center">Nuestras Cabañas</h2>
           {/* Acá después vas a mapear las cabañas desde la base de datos */}
-          <Row className="justify-content-center">
-            <Col md={6}>
-              <Card className="text-center p-4 shadow">
-                <Card.Body>
-                  <Card.Title>Ejemplo de Cabaña</Card.Title>
-                  <Card.Text>
-                    Esta sección mostrará información sobre las cabañas disponibles.
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Col>
+          <Row className="justify-content-center align-items-stretch">
+            {cabins.map((cabin) => (
+              <Col md={4} key={cabin.id} className="mb-4">
+                <Card className="text-center p-3 shadow" style={{ minHeight: "100%" }}>
+                  <Card.Img variant="top" src={cabin.imageUrl} alt={cabin.name} style={{ height: "200px", objectFit: "cover" }}/>
+                  <Card.Body>
+                    <Card.Title>{cabin.name}</Card.Title>
+                    <Card.Text>{cabin.description}</Card.Text>
+                    <Card.Text>Precio por noche: ${cabin.pricePerNight}</Card.Text>
+                    <Button onClick={() => handleReserve(cabin.id)}>
+                      Reservar
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
           </Row>
         </Container>
       </section>
