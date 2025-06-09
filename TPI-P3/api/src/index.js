@@ -7,6 +7,7 @@ import { sequelize } from "./db.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import cabinRoutes from "./routes/cabin.routes.js";
+import bookingRoutes from "./routes/booking.routes.js"
 
 import "./models/User.js";
 import "./models/Cabin.js";
@@ -26,6 +27,7 @@ try {
     app.use('/api/auth', authRoutes);
     app.use('/api/user', userRoutes);
     app.use('/api/cabin', cabinRoutes);
+    app.use('/api/booking', bookingRoutes);
 
     await sequelize.sync();
     

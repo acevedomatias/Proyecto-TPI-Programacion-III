@@ -50,7 +50,8 @@ export const AdminUsers = () => {
             alert("Usuario actualizado");
 
         } catch (error) {
-
+            console.error("Error al actualizar usuario:", error);
+            alert("Hubo un error al actualizar el usuario.");
         }
     }
 

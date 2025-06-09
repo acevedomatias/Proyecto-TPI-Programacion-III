@@ -3,6 +3,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 export const CustomNavbar  = ({ userRole }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    navigate("/login");               
+  };
+
   return (
     <Navbar bg="light" expand="lg" sticky="top">
       <Container>
@@ -25,7 +31,7 @@ export const CustomNavbar  = ({ userRole }) => {
                 </Button>
               </Link>
             )}
-            <Button variant="outline-danger" size="sm" >
+            <Button onClick={handleLogout} variant="outline-danger" size="sm" >
               Cerrar sesión
             </Button>
           </div>
