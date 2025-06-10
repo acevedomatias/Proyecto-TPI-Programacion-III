@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CustomNavbar from "../components/CustomNavbar ";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import naturalezaImg from '../assets/Naturaleza.png';
 import comodidadImg from '../assets/Comodidad.png';
 import atencionImg from '../assets/Atencion.png';
 
-export const Dashboard = ( {userRole }) => {
+export const Dashboard = ({ userRole }) => {
   const [cabins, setCabins] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:3000/api/cabin")
@@ -16,8 +18,7 @@ export const Dashboard = ( {userRole }) => {
   }, []);
 
   const handleReserve = (cabinId) => {
-    // para mostrar un form o redirigir a un form de reserva
-    console.log("Reservar cabaña ID:", cabinId);
+    navigate(`/BookingForm/${cabinId}`);
   };
 
   return (
@@ -36,6 +37,7 @@ export const Dashboard = ( {userRole }) => {
                   <Card.Body>
                     <Card.Title>{cabin.name}</Card.Title>
                     <Card.Text>{cabin.description}</Card.Text>
+                    <Card.Text>Capacidad: {cabin.capacity} Personas</Card.Text>
                     <Card.Text>Precio por noche: ${cabin.pricePerNight}</Card.Text>
                     <Button onClick={() => handleReserve(cabin.id)}>
                       Reservar

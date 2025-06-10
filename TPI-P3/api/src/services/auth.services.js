@@ -82,7 +82,7 @@ export const loginUser = async (req, res) => {
     const secretKey = 'cabañasTPI';
 
     const token = jwt.sign(
-        { email, role: user.role },
+        { id: user.id, email, role: user.role },
         secretKey, 
         { expiresIn: '1h' }
     );

@@ -16,10 +16,6 @@ export const Booking = sequelize.define("booking", {
   endDate: {
     type: DataTypes.DATEONLY,
     allowNull: false,
-  },
-  totalPrice: {
-    type: DataTypes.FLOAT,
-    allowNull: false,
   }
 }, { timestamps: false });
 

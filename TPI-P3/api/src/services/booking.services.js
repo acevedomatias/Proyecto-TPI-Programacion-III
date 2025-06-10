@@ -9,7 +9,7 @@ export const getAllBookings = async (req, res) => {
 }
 
 export const updateBooking = async (req, res) => {
-    const { startDate, endDate, totalPrice } = req.body;
+    const { startDate, endDate } = req.body;
     const { id } = req.params;
     const booking = await Booking.findByPk(id);
     if (!booking) {
@@ -23,11 +23,11 @@ export const updateBooking = async (req, res) => {
 }
 
 export const createBooking = async (req, res) => {
-  const { startDate, endDate, totalPrice } = req.body;
+  const { startDate, endDate } = req.body;
 
   try {
     const newBooking = await Booking.create({
-      startDate, endDate, totalPrice
+      startDate, endDate
     });
 
     res.status(201).json(newBooking);

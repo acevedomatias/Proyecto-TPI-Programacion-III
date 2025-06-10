@@ -10,6 +10,7 @@ import AdminPanel from "./pages/AdminPanel";
 import AdminUsers from "./pages/AdminUsers";
 import AdminCabins from "./pages/AdminCabins";
 import AdminBookings from "./pages/AdminBookings";
+import BookingForm from "./pages/BookingForm";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -26,6 +27,7 @@ function App() {
         <Route path='/adminUsers' element={<AdminUsers />}/>
         <Route path='/adminCabins' element={<AdminCabins />}/>
         <Route path='/adminBookings' element={<AdminBookings />}/>
+        <Route path='/BookingForm/:id' element={<BookingForm />}/>
 
         {/* <Route element={<Protected isLogged={isLogged}/>}> */}
           <Route path="/dashboard" element={<Dashboard userRole={userRole} />} />
@@ -34,5 +36,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;
