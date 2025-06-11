@@ -75,14 +75,13 @@ export const AdminBookings = () => {
       {bookings.length === 0 ? (
         <p>No hay reservas.</p>
       ) : (
-        <table className="space-y-4">
+        <table className="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded space-y-4">
           <thead>
               <tr>
                   <th>Id</th>
                   <th>Fecha inicio</th>
                   <th>Fecha fin</th>
-                  <th>Precio Por Noche</th>
-                  <th>Precio total</th>
+                  <th>Precio Total</th>
                   <th>Acciones</th>
               </tr>
           </thead>
@@ -94,8 +93,8 @@ export const AdminBookings = () => {
                 <td>{booking.endDate}</td>
                 <td>{booking.totalPrice}</td>
                 <td>
-                  <button onClick={() => setEditingBooking(booking)}>editar</button>
-                  <button onClick={() => handleDelete(booking.id)}>eliminar</button>
+                  <button onClick={() => setEditingBooking(booking)}>Editar</button>
+                  <button onClick={() => handleDelete(booking.id)}>Eliminar</button>
                 </td>
               </tr>
             ))}

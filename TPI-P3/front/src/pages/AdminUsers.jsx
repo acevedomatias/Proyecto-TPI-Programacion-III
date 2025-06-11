@@ -58,7 +58,7 @@ export const AdminUsers = () => {
 
     return (
         <div>
-            <table>
+            <table class="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
                 <thead>
                     <tr>
                         <th>Id</th>

@@ -115,7 +115,7 @@ export const AdminCabins = () => {
         <h2>Administrar Cabañas</h2>
         <button onClick={handleAddCabin}>Agregar Cabaña</button>
 
-        <table>
+        <table class="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
           <thead>
               <tr>
                   <th>Id</th>
