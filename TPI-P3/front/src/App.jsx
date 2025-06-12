@@ -27,7 +27,7 @@ function App() {
         <Route path='/adminPanel' element={<adminRoute> <AdminPanel /> </adminRoute>}/>
         <Route path='/adminUsers' element={<adminRoute> <AdminUsers /> </adminRoute>}/>
         <Route path='/adminCabins' element={<adminRoute> <AdminCabins /> </adminRoute>}/>
-        <Route path='/adminBookings' element={<adminRoute> <AdminBookings /> </adminRoute>}/>
+        <Route path='/adminBookings' element={ <AdminBookings /> }/>
         <Route path='/BookingForm/:id' element={<BookingForm />}/>
 
         {/* <Route element={<Protected isLogged={isLogged}/>}> */}

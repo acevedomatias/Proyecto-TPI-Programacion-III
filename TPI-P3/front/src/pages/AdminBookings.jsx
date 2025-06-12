@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+
 import { useState, useEffect } from "react";
 
 export const AdminBookings = () => {
@@ -20,7 +20,7 @@ export const AdminBookings = () => {
       await fetch(`http://localhost:3000/api/booking/${id}`, {
         method: "DELETE",
       });
-      setBooking(booking.filter((booking) => booking.id !==id));
+      setBooking(bookings.filter((booking) => booking.id !==id));
     } catch (error) {
       console.error("Error al eliminar reserva:", error);
     }
@@ -32,11 +32,14 @@ export const AdminBookings = () => {
         if (
           !editingBooking.startDate ||
           !editingBooking.endDate ||
-          !editingBooking.totalPrice
+          !editingBooking.userId ||
+          !editingBooking.cabinId
         ) {
           alert("Todos los campos son obligatorios");
           return;
         }
+        
+        console.log("Booking a actualizar:", editingBooking);
 
         try {
             const response = await fetch(`http://localhost:3000/api/booking/${editingBooking.id}`, {
@@ -81,7 +84,8 @@ export const AdminBookings = () => {
                   <th>Id</th>
                   <th>Fecha inicio</th>
                   <th>Fecha fin</th>
-                  <th>Precio Total</th>
+                  <th>Id Usuario</th>
+                  <th>Id Cabaña</th>
                   <th>Acciones</th>
               </tr>
           </thead>
@@ -91,7 +95,8 @@ export const AdminBookings = () => {
                 <td>{booking.id}</td>
                 <td>{booking.startDate}</td>
                 <td>{booking.endDate}</td>
-                <td>{booking.totalPrice}</td>
+                <td>{booking.userId}</td>
+                <td>{booking.cabinId}</td>
                 <td>
                   <button onClick={() => setEditingBooking(booking)}>Editar</button>
                   <button onClick={() => handleDelete(booking.id)}>Eliminar</button>
@@ -105,26 +110,43 @@ export const AdminBookings = () => {
       {/* condicional */}
             {editingBooking && (
                 <form onSubmit={handleUpdate}>
-                    <input
-                        type="date"
-                        name="startDate"
-                        value={editingBooking.startDate}
-                        onChange={(e) => setEditingBooking({...editingBooking, startDate: e.target.value})}
-                    />
+                  <input
+                    type="date"
+                    name="startDate"
+                    value={editingBooking.startDate ? editingBooking.startDate.slice(0, 10) : ""}
+                    onChange={(e) =>
+                      setEditingBooking({ ...editingBooking, startDate: e.target.value })
+                    }
+                  />
 
-                    <input
-                        type="date"
-                        name="endDate"
-                        value={editingBooking.endDate}
-                        onChange={(e) => setEditingBooking({...editingBooking, endDate: e.target.value})}
-                    />
+                  <input
+                    type="date"
+                    name="endDate"
+                    value={editingBooking.endDate ? editingBooking.endDate.slice(0, 10) : ""}
+                    onChange={(e) =>
+                      setEditingBooking({ ...editingBooking, endDate: e.target.value })
+                    }
+                  />
 
-                    <input
-                        type="number"
-                        name="totalPrice"
-                        value={editingBooking.totalPrice}
-                        onChange={(e) => setEditingBooking({...editingBooking, totalPrice: e.target.value})}
-                    />
+                  <input
+                    type="number"
+                    name="userId"
+                    value={editingBooking.userId}
+                    onChange={(e) =>
+                      setEditingBooking({ ...editingBooking, userId: parseInt(e.target.value) })
+                    }
+                    placeholder="ID Usuario"
+                  />
+
+                  <input
+                    type="number"
+                    name="cabinId"
+                    value={editingBooking.cabinId}
+                    onChange={(e) =>
+                      setEditingBooking({ ...editingBooking, cabinId: parseInt(e.target.value) })
+                    }
+                    placeholder="ID Cabaña"
+                  />
 
                     <button type="submit">Guardar</button>
                     <button type="button" onClick={() => setEditingBooking(null)}>Cancelar</button>

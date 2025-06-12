@@ -8,6 +8,15 @@ export const getAllCabins = async (req, res) => {
    res.json(cabins);
 }
 
+export const getCabinById = async (req, res) => {
+  const { id } = req.params;
+  const cabin = await Cabin.findByPk(id);
+  if (!cabin) {
+      return res.status(404).send({message: "Cabaña no encontrada"});
+  }
+  res.json(cabin);
+}
+
 export const updateCabin = async (req, res) => {
     const { name, description, pricePerNight, capacity, isAvailable, imageUrl } = req.body;
     const { id } = req.params;

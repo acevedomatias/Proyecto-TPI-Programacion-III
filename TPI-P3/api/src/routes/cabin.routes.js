@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { getAllCabins, updateCabin, deleteCabin, createCabin } from "../services/cabin.services.js"
+import { getAllCabins, getCabinById, updateCabin, deleteCabin, createCabin } from "../services/cabin.services.js"
 
 const router = Router();
 
 router.get("/", getAllCabins);
+
+router.get("/:id", getCabinById);
 
 router.post("/", createCabin);
 
