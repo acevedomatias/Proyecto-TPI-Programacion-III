@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
+
 
 export const AdminCabins = () => {
   const [cabins, setCabins] = useState([]);
@@ -111,97 +113,154 @@ export const AdminCabins = () => {
 
 
   return (
-      <div>
-        <h2>Administrar Cabañas</h2>
-        <button onClick={handleAddCabin}>Agregar Cabaña</button>
+    <div>
 
-        <table class="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
-          <thead>
-              <tr>
-                  <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Descripcion</th>
-                  <th>Precio Por Noche</th>
-                  <th>Capacidad</th>
-                  <th>Disponible</th>
-                  <th>Url</th>
-                  <th>Acciones</th>
-              </tr>
-          </thead>
-          <tbody>
-              {cabins.map((cabin) => (
-                  <tr key={cabin.id}>
-                      <td>{cabin.id}</td>
-                      <td>{cabin.name}</td>
-                      <td>{cabin.description}</td>
-                      <td>{cabin.pricePerNight}</td>
-                      <td>{cabin.capacity}</td>
-                      <td>{cabin.isAvailable}</td>
-                      <td>{cabin.imageUrl}</td>
-                      <td>
-                          <button onClick={() => {
-                            setEditingCabin(cabin);
-                            setNewcabin(cabin);
-                            setShowForm(true);
-                          }}>Editar</button>
-                          <button onClick={() => handleDelete(cabin.id)}>Eliminar</button>
-                      </td>
-                  </tr>   
-              ))}
-          </tbody>
-        </table>
+      <div className="position-absolute top-0 start-0 m-4">
+        <Link to="/adminPanel" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
+      </div>
+
+        <h2 className="m-4 text-center">Administrar Cabañas</h2>
+        <button class="btn btn-success m-3" onClick={handleAddCabin}><i class="bi bi-plus-lg m-1 p-1"></i>Agregar Cabaña</button>
+
+        <table className="table table-hover table-striped table-bordered align-middle text-center shadow-sm rounded">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Descripcion</th>
+      <th>Precio Por Noche</th>
+      <th>Capacidad</th>
+      <th>Disponible</th>
+      <th style={{ maxWidth: '150px' }}>Url</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {cabins.map((cabin) => (
+      <tr key={cabin.id}>
+        <td>{cabin.id}</td>
+        <td>{cabin.name}</td>
+        <td>{cabin.description}</td>
+        <td>{cabin.pricePerNight}</td>
+        <td>{cabin.capacity}</td>
+        <td>{cabin.isAvailable ? (<i className="bi bi-check-circle-fill text-success fs-5"></i>) : (<i className="bi bi-x-circle-fill text-danger fs-5"></i>)}</td>
+
+        <td>
+          <div
+            className="text-truncate"
+            style={{
+              maxWidth: '150px',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              margin: '0 auto'
+            }}
+            title={cabin.imageUrl}>
+            {cabin.imageUrl}
+          </div>
+        </td>
+
+        <td>
+          <button className="btn btn-primary p-1 m-1" onClick={() => {
+            setEditingCabin(cabin);
+            setNewcabin(cabin);
+            setShowForm(true);
+          }}>
+            <i className="bi bi-pencil-square m-1"></i>Editar</button>
+          <button className="btn btn-danger p-1 m-1" onClick={() => handleDelete(cabin.id)}>
+            <i className="bi bi-trash m-1"></i>Eliminar</button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
 
         {showForm && (
-          <form onSubmit={handleSubmit}>
-            <input 
-              type="text" 
-              placeholder="Nombre"
-              value={newCabin.name}
-              name="name"
-              onChange={handleChangeNewCabin}
-            />
-            <input
-              type="text"
-              placeholder="Descripción"
-              value={newCabin.description}
-              name="description"
-              onChange={handleChangeNewCabin}
-            />
-            <input
-              type="number"
-              placeholder="Precio por noche"
-              value={newCabin.pricePerNight}
-              name="pricePerNight"
-              onChange={handleChangeNewCabin}
-            />
-            <input
-              type="number"
-              placeholder="Capacidad"
-              value={newCabin.capacity}
-              name="capacity"
-              onChange={handleChangeNewCabin}
-            />
-            <input
-              type="text"
-              placeholder="URL de imagen"
-              value={newCabin.imageUrl}
-              name="imageUrl"
-              onChange={handleChangeNewCabin}
-            />
-            <label>
-              Disponible:
-              <input
-                type="checkbox"
-                checked={newCabin.isAvailable}
-                name="isAvailable"
-                onChange={(e) => setNewcabin({ ...newCabin, isAvailable: e.target.checked })}
-              />
-          </label>
+  <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm bg-light w-100" style={{ maxWidth: '500px', margin: '0 auto' }}>
+    <h4 className="mb-4 text-center">{editingCabin ? "Editar Cabaña" : "Agregar Cabaña"}</h4>
 
-          <button type="submit">{editingCabin ? "Guardar cambios" : "Agregar"}</button>
-          <button type="button" onClick={() => setShowForm(false)}>Cancelar</button>
-          </form>
-        )}              
+    <div className="mb-3">
+      <label className="form-label">Nombre</label>
+      <input 
+        type="text" 
+        className="form-control"
+        placeholder="Nombre"
+        value={newCabin.name}
+        name="name"
+        onChange={handleChangeNewCabin}
+      />
+    </div>
+
+    <div className="mb-3">
+      <label className="form-label">Descripción</label>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Descripción"
+        value={newCabin.description}
+        name="description"
+        onChange={handleChangeNewCabin}
+      />
+    </div>
+
+    <div className="mb-3">
+      <label className="form-label">Precio por noche</label>
+      <input
+        type="number"
+        className="form-control"
+        placeholder="Precio por noche"
+        value={newCabin.pricePerNight}
+        name="pricePerNight"
+        onChange={handleChangeNewCabin}
+      />
+    </div>
+
+    <div className="mb-3">
+      <label className="form-label">Capacidad</label>
+      <input
+        type="number"
+        className="form-control"
+        placeholder="Capacidad"
+        value={newCabin.capacity}
+        name="capacity"
+        onChange={handleChangeNewCabin}
+      />
+    </div>
+
+    <div className="mb-3">
+      <label className="form-label">URL de imagen</label>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="URL de imagen"
+        value={newCabin.imageUrl}
+        name="imageUrl"
+        onChange={handleChangeNewCabin}
+      />
+    </div>
+
+    <div className="form-check form-switch mb-3">
+      <input
+        className="form-check-input"
+        type="checkbox"
+        checked={newCabin.isAvailable}
+        name="isAvailable"
+        id="disponibleSwitch"
+        onChange={(e) => setNewcabin({ ...newCabin, isAvailable: e.target.checked })}
+      />
+      <label className="form-check-label" htmlFor="disponibleSwitch">Disponible</label>
+    </div>
+
+    <div className="d-flex justify-content-between">
+      <button type="submit" className="btn btn-success">
+        {editingCabin ? "Guardar cambios" : "Agregar"}
+      </button>
+      <button type="button" className="btn btn-danger" onClick={() => setShowForm(false)}>Cancelar</button>
+    </div>
+  </form>
+)}
+             
         
       </div>
   )
