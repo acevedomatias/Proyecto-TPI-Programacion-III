@@ -32,14 +32,28 @@ export const Dashboard = ({ userRole }) => {
           <Row className="justify-content-center align-items-stretch">
             {cabins.map((cabin) => (
               <Col md={4} key={cabin.id} className="mb-4">
-                <Card className="text-center p-3 shadow" style={{ minHeight: "100%" }}>
-                  <Card.Img variant="top" src={cabin.imageUrl} alt={cabin.name} style={{ height: "200px", objectFit: "cover" }}/>
-                  <Card.Body>
-                    <Card.Title>{cabin.name}</Card.Title>
-                    <Card.Text>{cabin.description}</Card.Text>
-                    <Card.Text>Capacidad: {cabin.capacity} Personas</Card.Text>
-                    <Card.Text>Precio por noche: ${cabin.pricePerNight}</Card.Text>
-                    <Button onClick={() => handleReserve(cabin.id)}>
+                <Card className="text-center p-3 shadow h-100">
+                  <Card.Img
+                    variant="top"
+                    src={cabin.imageUrl}
+                    alt={cabin.name}
+                    style={{ height: "200px", objectFit: "cover" }}
+                  />
+                  <Card.Body className="d-flex flex-column">
+                    <Card.Title className="h5 fw-bold text-dark">{cabin.name}</Card.Title>
+                    <Card.Text className="text-secondary small lh-base mb-3 text-truncate-multiline">
+                      {cabin.description}
+                    </Card.Text>
+                    <Card.Text className="text-muted fst-italic small mb-2">
+                      Capacidad: {cabin.capacity} Personas
+                    </Card.Text>
+                    <Card.Text className="text-muted fst-italic small mb-3">
+                      Precio por noche: ${cabin.pricePerNight}
+                    </Card.Text>
+                    <Button
+                      className="btn-primary mt-auto"
+                      onClick={() => handleReserve(cabin.id)}
+                    >
                       Reservar
                     </Button>
                   </Card.Body>
@@ -50,49 +64,60 @@ export const Dashboard = ({ userRole }) => {
         </Container>
       </section>
 
-      <section id="conocenos" style={{ padding: "4rem 0", backgroundColor: "#f0f4f8" }}>
+      <section
+        id="conocenos"
+        style={{ padding: "4rem 0", backgroundColor: "#f0f4f8" }}
+      >
         <Container>
-          <h2 className="mb-5 text-center">¿Quiénes Somos?</h2>
-          <Row className="text-center">
-            <Col md={4}>
-              <img
-                src= {naturalezaImg}
-                alt="Naturaleza"
-                width={80}
-                className="mb-3"
-              />
-              <h4>Amantes de la Naturaleza</h4>
-              <p>
-                Nuestro compromiso es brindarte un espacio en armonía con el entorno, rodeado de montañas, bosques y aire puro.
-              </p>
-            </Col>
-            <Col md={4}>
-              <img
-                src={comodidadImg}
-                alt="Comodidad"
-                width={80}
-                className="mb-3"
-              />
-              <h4>Cabañas Confortables</h4>
-              <p>
-                Combinamos rusticidad con confort moderno. Todas nuestras cabañas están totalmente equipadas para tu descanso.
-              </p>
-            </Col>
-            <Col md={4}>
-              <img
-                src={atencionImg}
-                alt="Atención"
-                width={80}
-                className="mb-3"
-              />
-              <h4>Atención Personalizada</h4>
-              <p>
-                Nos encanta recibirte como si fueras parte de nuestra familia. Siempre atentos a que vivas una experiencia única.
-              </p>
-            </Col>
+          <h2 className="mb-5 text-center fw-bold" style={{ color: "#2c3e50" }}>
+            ¿Quiénes Somos?
+          </h2>
+          <Row className="text-center gy-4">
+            {[ 
+              { img: naturalezaImg, alt: "Naturaleza", title: "Amantes de la Naturaleza", text: "Nuestro compromiso es brindarte un espacio en armonía con el entorno, rodeado de montañas, bosques y aire puro." },
+              { img: comodidadImg, alt: "Comodidad", title: "Cabañas Confortables", text: "Combinamos rusticidad con confort moderno. Todas nuestras cabañas están totalmente equipadas para tu descanso." },
+              { img: atencionImg, alt: "Atención", title: "Atención Personalizada", text: "Nos encanta recibirte como si fueras parte de nuestra familia. Siempre atentos a que vivas una experiencia única." }
+            ].map(({ img, alt, title, text }) => (
+              <Col md={4} key={title}>
+                <div className="conocenos-card p-4 rounded shadow-sm h-100">
+                  <img
+                    src={img}
+                    alt={alt}
+                    width={100}
+                    className="mb-3 mx-auto d-block img-fluid icon-hover"
+                    style={{ filter: "drop-shadow(0 2px 2px rgba(0,0,0,0.1))" }}
+                  />
+                  <h4 className="mb-3 fw-semibold" style={{ color: "#34495e" }}>
+                    {title}
+                  </h4>
+                  <p className="text-muted fs-6">{text}</p>
+                </div>
+              </Col>
+            ))}
           </Row>
         </Container>
+
+        <style jsx>{`
+          .conocenos-card {
+            background: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: default;
+          }
+          .conocenos-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+          }
+          .icon-hover {
+            transition: transform 0.3s ease;
+          }
+          .conocenos-card:hover .icon-hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.15));
+          }
+        `}</style>
       </section>
+
+
 
       <section id="contacto" style={{ padding: "4rem 0", backgroundColor: "#e9ecef" }}>
         <Container>
