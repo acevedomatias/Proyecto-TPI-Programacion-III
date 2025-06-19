@@ -1,7 +1,15 @@
 import { Container, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function PublicHome() {
+  useEffect(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role"); 
+      localStorage.removeItem("userId");
+  }, [])
+
+
   return (
     <Container
       className="d-flex flex-column justify-content-center align-items-center"

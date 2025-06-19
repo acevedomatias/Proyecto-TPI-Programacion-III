@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { validateLogin } from "../utils/ValidationsLogin";
 import { jwtDecode } from "jwt-decode";
@@ -14,6 +14,12 @@ export const Login = ({ setIsLogged, setUserRole }) => {
     const passwordRef = useRef(null);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role"); 
+        localStorage.removeItem("userId");
+    }, [])
 
     const handleChange = (e) => {
         setFormData({
@@ -58,6 +64,7 @@ export const Login = ({ setIsLogged, setUserRole }) => {
 
                 //extrae el rol desde el token
                 const decoded = jwtDecode(data.token);
+                localStorage.setItem("role", decoded.role);
                 setUserRole(decoded.role);
 
                 setIsLogged(true);

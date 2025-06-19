@@ -4,8 +4,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export const CustomNavbar  = ({ userRole }) => {
   const navigate = useNavigate();
+  
   const handleLogout = () => {
-    localStorage.removeItem("token"); 
+    localStorage.removeItem("token");
+    localStorage.removeItem("role"); 
+    localStorage.removeItem("userId");
     navigate("/login");               
   };
 

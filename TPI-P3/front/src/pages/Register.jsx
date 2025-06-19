@@ -15,6 +15,12 @@ export const Register = () => {
     
     const navigate = useNavigate();
 
+    useEffect(() => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("role"); 
+      localStorage.removeItem("userId");
+    }, [])
+
     const handleChange = (e) => {
         setFormData({
             ...formData,

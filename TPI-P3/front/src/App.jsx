@@ -11,10 +11,12 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminCabins from "./pages/AdminCabins";
 import AdminBookings from "./pages/AdminBookings";
 import BookingForm from "./pages/BookingForm";
+import AdminRoute from "./components/AdminRoute";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
   const [userRole, setUserRole] = useState(null);
+  
 
   return (
     <BrowserRouter>
