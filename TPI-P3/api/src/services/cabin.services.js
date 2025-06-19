@@ -60,3 +60,9 @@ export const deleteCabin = async (req, res) => {
     await cabin.destroy();
     res.send(`La cabaña con id ${id} ha sido eliminada correctamente`);
 }
+
+
+
+
+
+

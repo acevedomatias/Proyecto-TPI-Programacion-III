@@ -12,25 +12,29 @@ export const BookingForm = () => {
     useEffect(() => {
     fetch(`http://localhost:3000/api/cabin/${id}`)
       .then(res => res.json())
-      .then(data => setCabin(data))
+      .then(data => {
+        console.log("Cabaña recibida:", data);
+        setCabin(data);
+      })
       .catch(err => console.error(err));
     }, [id]);
 
     const handleSubmit = async (e) => {
       e.preventDefault();
+
+      const userId = localStorage.getItem("userId");
+      const body = {
+        cabinId: id, 
+        userId: userId,
+        startDate,
+        endDate
+      };
       
       try {
         const response = await fetch("http://localhost:3000/api/booking", {
             method: "POST",
-            headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-            body: JSON.stringify({
-            cabinId: id,
-            startDate,
-            endDate,
-            }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
         });
 
         if (!response.ok) {
@@ -82,4 +86,3 @@ export const BookingForm = () => {
 }
 
 export default BookingForm;
-

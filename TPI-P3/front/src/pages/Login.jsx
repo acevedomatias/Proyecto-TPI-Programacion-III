@@ -52,16 +52,18 @@ export const Login = ({ setIsLogged, setUserRole }) => {
                     return;
                 }
 
-                const token = await response.json();
-                localStorage.setItem("token", token);
+                const data = await response.json();
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("userId", data.user.id);
 
                 //extrae el rol desde el token
-                const decoded = jwtDecode(token);
+                const decoded = jwtDecode(data.token);
                 setUserRole(decoded.role);
 
                 setIsLogged(true);
                 alert("Inicio de sesión exitoso");
                 navigate("/Dashboard");
+                
             } catch (error) {
                 console.error("Error al hacer login:", error);
                 alert("Ocurrió un error inesperado");

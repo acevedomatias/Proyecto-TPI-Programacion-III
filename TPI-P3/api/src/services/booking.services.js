@@ -23,16 +23,17 @@ export const updateBooking = async (req, res) => {
 }
 
 export const createBooking = async (req, res) => {
-  const { startDate, endDate } = req.body;
+  const { startDate, endDate, userId, cabinId } = req.body;
 
   try {
     const newBooking = await Booking.create({
-      startDate, endDate
+      startDate, endDate, userId, cabinId
     });
 
     res.status(201).json(newBooking);
   } catch (error) {
     console.error("Error al crear reserva:", error);
+    console.error(error);
     res.status(500).json({ message: "No se pudo crear la reserva" });
   }
 };

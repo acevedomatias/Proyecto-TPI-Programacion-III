@@ -1,7 +1,4 @@
-
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-
 
 export const AdminBookings = () => {
   const [bookings, setBooking] = useState([]);
@@ -72,11 +69,11 @@ export const AdminBookings = () => {
 
   return (
     <div>
-      <div className="position-absolute top-0 start-0 m-4">
+      {/* <div className="position-absolute top-0 start-0 m-4">
         <Link to="/adminPanel" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
-      </div>
+      </div> */}
 
-      <h2 className="m-4 text-center">Administrar Reservas</h2>
+      <h2>Administrar Reservas</h2>
       {bookings.length === 0 ? (
         <p>No hay reservas.</p>
       ) : (
@@ -100,8 +97,8 @@ export const AdminBookings = () => {
                 <td>{booking.userId}</td>
                 <td>{booking.cabinId}</td>
                 <td>
-                  <button class="btn btn-danger p-2 me-2" onClick={() => setEditingBooking(booking)}><i class="bi bi-trash m-1"></i>Editar</button>
-                  <button class="btn btn-primary p-2" onClick={() => handleDelete(booking.id)}><i class="bi bi-pencil-square m-1"></i>Eliminar</button>
+                  <button onClick={() => setEditingBooking(booking)}>Editar</button>
+                  <button onClick={() => handleDelete(booking.id)}>Eliminar</button>
                 </td>
               </tr>
             ))}
@@ -151,7 +148,7 @@ export const AdminBookings = () => {
                   />
 
                     <button type="submit">Guardar</button>
-                    <button type="button" className="btn btn-danger p-1 m-1" onClick={() => setEditingBooking(null)}>Cancelar</button>
+                    <button type="button" onClick={() => setEditingBooking(null)}>Cancelar</button>
                 </form>  
             )}
     </div>
