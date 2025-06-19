@@ -11,7 +11,6 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminCabins from "./pages/AdminCabins";
 import AdminBookings from "./pages/AdminBookings";
 import BookingForm from "./pages/BookingForm";
-import AdminRoute from "./components/AdminRoute";
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -24,9 +23,9 @@ function App() {
         <Route path='/register' element={<Register />}/>
         <Route path='/login' element={<Login setIsLogged={setIsLogged} setUserRole={setUserRole} />}/>
         <Route path='/bookings' element={<UserBookings />}/>
-        <Route path='/adminPanel' element={<adminRoute> <AdminPanel /> </adminRoute>}/>
-        <Route path='/adminUsers' element={<adminRoute> <AdminUsers /> </adminRoute>}/>
-        <Route path='/adminCabins' element={<adminRoute> <AdminCabins /> </adminRoute>}/>
+        <Route path='/adminPanel' element={ <AdminPanel /> }/>
+        <Route path='/adminUsers' element={ <AdminUsers /> }/>
+        <Route path='/adminCabins' element={ <AdminCabins /> }/>
         <Route path='/adminBookings' element={ <AdminBookings /> }/>
         <Route path='/BookingForm/:id' element={<BookingForm />}/>
 

@@ -28,12 +28,7 @@ export const AdminBookings = () => {
   const handleUpdate = async (e) => {
         e.preventDefault();
 
-        if (
-          !editingBooking.startDate ||
-          !editingBooking.endDate ||
-          !editingBooking.userId ||
-          !editingBooking.cabinId
-        ) {
+        if (!editingBooking.startDate ||  !editingBooking.endDate || !editingBooking.userId || !editingBooking.cabinId) {
           alert("Todos los campos son obligatorios");
           return;
         }

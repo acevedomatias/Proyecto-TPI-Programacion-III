@@ -13,10 +13,10 @@ export const updateBooking = async (req, res) => {
     const { id } = req.params;
     const booking = await Booking.findByPk(id);
     if (!booking) {
-        return res.status(404).send({message: "Reserva no encontrada"});
+      return res.status(404).send({message: "Reserva no encontrada"});
     }
     await booking.update({
-        startDate, endDate, totalPrice
+      startDate, endDate
     });
 
     res.json(booking);
