@@ -17,7 +17,11 @@ export const Dashboard = ({ userRole }) => {
       .catch((error) => console.error("Error al obtener cabañas:", error));
   }, []);
 
-  const handleReserve = (cabinId) => {
+  const handleReserve = (cabinId, isAvailable) => {
+    if (!isAvailable) {
+      alert("Esta cabaña no esta disponible");
+      return
+    }
     navigate(`/BookingForm/${cabinId}`);
   };
 
@@ -57,7 +61,7 @@ export const Dashboard = ({ userRole }) => {
                     </Card.Text>
                     <Button
                       className="btn-primary mt-auto"
-                      onClick={() => handleReserve(cabin.id)}
+                      onClick={() => handleReserve(cabin.id, cabin.isAvailable)}
                     >
                       Reservar
                     </Button>
