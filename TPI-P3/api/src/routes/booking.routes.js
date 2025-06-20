@@ -1,9 +1,11 @@
 import { Router } from "express";
-import { getAllBookings,  createBooking, updateBooking, deleteBooking} from "../services/booking.services.js"
+import { getAllBookings,  createBooking, updateBooking, deleteBooking, getBookingsByUser} from "../services/booking.services.js"
 
 const router = Router();
 
 router.get("/", getAllBookings);
+
+router.get("/user/:userId", getBookingsByUser);
 
 router.post("/", createBooking);
 

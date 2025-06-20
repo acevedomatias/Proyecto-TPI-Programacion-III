@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Container, Form, Button, Card } from "react-bootstrap";
 
@@ -57,6 +57,9 @@ export const BookingForm = () => {
 
   return (
     <Container className="mt-5">
+      <div className="position-absolute top-0 start-0 m-4">
+        <Link to="/dashboard" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
+      </div>
       <Card className="p-4 shadow">
         <h2 className="mb-4 text-center">Reservar: {cabin.name}</h2>
         <Form onSubmit={handleSubmit}>

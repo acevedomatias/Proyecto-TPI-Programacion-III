@@ -12,6 +12,8 @@ export const CustomNavbar  = ({ userRole }) => {
     navigate("/login");               
   };
 
+  const role = localStorage.getItem("role");
+
   return (
     <Navbar bg="light" expand="lg" sticky="top">
       <Container>
@@ -23,11 +25,11 @@ export const CustomNavbar  = ({ userRole }) => {
             <Nav.Link href="#cabañas">Cabañas</Nav.Link>
             <Nav.Link href="#conocenos">Conocenos</Nav.Link>
             <Nav.Link href="#contacto">Contacto</Nav.Link>
-            <Nav.Link as={Link} to="/reservas">Mis Reservas</Nav.Link>
+            <Nav.Link as={Link} to="/bookings">Mis Reservas</Nav.Link>
           </Nav>
 
           <div className="d-flex align-items-center gap-2">
-            {userRole === "admin" && (
+            {(userRole === "admin" || role === "admin") && (
               <Link to="/adminPanel">
                 <Button variant="warning" size="sm">
                   Panel de Administración

@@ -10,6 +10,8 @@ export const Dashboard = ({ userRole }) => {
   const [cabins, setCabins] = useState([]);
   const navigate = useNavigate();
 
+ 
+
   useEffect(() => {
     fetch("http://localhost:3000/api/cabin")
       .then((res) => res.json())
