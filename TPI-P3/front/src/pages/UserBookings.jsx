@@ -46,7 +46,6 @@ const UserBookings = () => {
             throw new Error(err.message);
           });
         }
-        // Reserva eliminada OK
         setBookings((prev) => prev.filter((booking) => booking.id !== bookingId));
         alert("Reserva cancelada correctamente.");
       })

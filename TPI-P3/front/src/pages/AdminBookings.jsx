@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export const AdminBookings = () => {
   const [bookings, setBooking] = useState([]);
@@ -64,9 +65,9 @@ export const AdminBookings = () => {
 
   return (
     <div>
-      {/* <div className="position-absolute top-0 start-0 m-4">
+      <div className="position-absolute top-0 start-0 m-4">
         <Link to="/adminPanel" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
-      </div> */}
+      </div>
 
       <h2>Administrar Reservas</h2>
       {bookings.length === 0 ? (
@@ -101,51 +102,51 @@ export const AdminBookings = () => {
         </table>
       )}
 
-      {/* condicional */}
-            {editingBooking && (
-                <form onSubmit={handleUpdate}>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={editingBooking.startDate ? editingBooking.startDate.slice(0, 10) : ""}
-                    onChange={(e) =>
-                      setEditingBooking({ ...editingBooking, startDate: e.target.value })
-                    }
-                  />
+ 
+      {editingBooking && (
+          <form onSubmit={handleUpdate}>
+            <input
+              type="date"
+              name="startDate"
+              value={editingBooking.startDate ? editingBooking.startDate.slice(0, 10) : ""}
+              onChange={(e) =>
+                setEditingBooking({ ...editingBooking, startDate: e.target.value })
+              }
+            />
 
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={editingBooking.endDate ? editingBooking.endDate.slice(0, 10) : ""}
-                    onChange={(e) =>
-                      setEditingBooking({ ...editingBooking, endDate: e.target.value })
-                    }
-                  />
+            <input
+              type="date"
+              name="endDate"
+              value={editingBooking.endDate ? editingBooking.endDate.slice(0, 10) : ""}
+              onChange={(e) =>
+                setEditingBooking({ ...editingBooking, endDate: e.target.value })
+              }
+            />
 
-                  <input
-                    type="number"
-                    name="userId"
-                    value={editingBooking.userId}
-                    onChange={(e) =>
-                      setEditingBooking({ ...editingBooking, userId: parseInt(e.target.value) })
-                    }
-                    placeholder="ID Usuario"
-                  />
+            <input
+              type="number"
+              name="userId"
+              value={editingBooking.userId}
+              onChange={(e) =>
+                setEditingBooking({ ...editingBooking, userId: parseInt(e.target.value) })
+              }
+              placeholder="ID Usuario"
+            />
 
-                  <input
-                    type="number"
-                    name="cabinId"
-                    value={editingBooking.cabinId}
-                    onChange={(e) =>
-                      setEditingBooking({ ...editingBooking, cabinId: parseInt(e.target.value) })
-                    }
-                    placeholder="ID Cabaña"
-                  />
+            <input
+              type="number"
+              name="cabinId"
+              value={editingBooking.cabinId}
+              onChange={(e) =>
+                setEditingBooking({ ...editingBooking, cabinId: parseInt(e.target.value) })
+              }
+              placeholder="ID Cabaña"
+            />
 
-                    <button type="submit">Guardar</button>
-                    <button type="button" onClick={() => setEditingBooking(null)}>Cancelar</button>
-                </form>  
-            )}
+              <button type="submit">Guardar</button>
+              <button type="button" onClick={() => setEditingBooking(null)}>Cancelar</button>
+          </form>  
+        )}
     </div>
   )
 }
