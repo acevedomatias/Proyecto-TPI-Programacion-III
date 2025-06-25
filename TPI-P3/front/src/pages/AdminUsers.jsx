@@ -2,63 +2,81 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
 export const AdminUsers = () => {
-    const [users, setUsers] = useState([]);
-    const [editingUser, setEditingUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [editingUser, setEditingUser] = useState(null);
+  const [alert, setAlert] = useState({ message: '', type: '' });
 
-    useEffect(() => {
-        fetch("http://localhost:3000/api/user")
-        .then(res => res.json())
-        .then(data => setUsers(data))
-        .catch(error => console.error("Error al obtener usuarios:", error));
-    }, []);
+  useEffect(() => {
+    fetch("http://localhost:3000/api/user")
+      .then(res => res.json())
+      .then(data => setUsers(data))
+      .catch(error => console.error("Error al obtener usuarios:", error));
+  }, []);
 
-    const handleDelete = async (id) => {
-        const confirm = window.confirm("¿Estás seguro que querés eliminar este usuario?");
-        if (!confirm) return;
-
-        try {
-            await fetch(`http://localhost:3000/api/user/${id}`, {
-                method: "DELETE",
-            });
-            setUsers(users.filter((user) => user.id !== id))
-        } catch (error) {
-            console.error("Error al eliminar usuario:", error);
-        }
+  useEffect(() => {
+    if (alert.message) {
+      const timeout = setTimeout(() => setAlert({ message: '', type: '' }), 3000);
+      return () => clearTimeout(timeout);
     }
+  }, [alert]);
 
-    const handleUpdate = async (e) => {
-        e.preventDefault();
+  const handleDelete = async (id) => {
+    const confirm = window.confirm("¿Estás seguro que querés eliminar este usuario?");
+    if (!confirm) return;
 
-        try {
-            const response = await fetch(`http://localhost:3000/api/user/${editingUser.id}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(editingUser)
-            });
-
-            if (!response.ok) {
-                    const errorData = await response.json();
-                    alert("Error: " + errorData.message);
-                    return;
-                }
-
-            //actualiza el array de usuarios local
-            //si encuentra un user con el mismo id q estamos editando lo remplaza por el nuevo 
-            setUsers(users.map((user) => (user.id === editingUser.id ? editingUser : user)));
-            setEditingUser(null); // cierra formulario
-            alert("Usuario actualizado");
-
-        } catch (error) {
-            console.error("Error al actualizar usuario:", error);
-            alert("Hubo un error al actualizar el usuario.");
-        }
+    try {
+      await fetch(`http://localhost:3000/api/user/${id}`, {
+        method: "DELETE",
+      });
+      setUsers(users.filter((user) => user.id !== id));
+      setAlert({ message: "Usuario eliminado correctamente", type: "success" });
+    } catch (error) {
+      console.error("Error al eliminar usuario:", error);
+      setAlert({ message: "Hubo un error al eliminar el usuario.", type: "danger" });
     }
+  };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
 
-    return (
-    <div>
+    try {
+      const response = await fetch(`http://localhost:3000/api/user/${editingUser.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(editingUser)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setAlert({ message: "Error: " + errorData.message, type: "danger" });
+        return;
+      }
+
+      setUsers(users.map((user) => (user.id === editingUser.id ? editingUser : user)));
+      setEditingUser(null);
+      setAlert({ message: "Usuario actualizado", type: "success" });
+
+    } catch (error) {
+      console.error("Error al actualizar usuario:", error);
+      setAlert({ message: "Hubo un error al actualizar el usuario.", type: "danger" });
+    }
+  };
+
+  return (
+    <div className="position-relative">
+
+      {alert.message && (
+        <div
+          className={`alert alert-${alert.type} position-fixed top-0 end-0 m-4 shadow rounded`}
+          style={{ zIndex: 9999, minWidth: '250px' }}
+          role="alert"
+        >
+          {alert.message}
+        </div>
+      )}
+
       <div className="position-absolute top-0 start-0 m-4">
         <Link to="/adminPanel" style={{ textDecoration: 'none' }}>&larr; Volver</Link>
       </div>
@@ -95,7 +113,6 @@ export const AdminUsers = () => {
         </tbody>
       </table>
 
-      {/* Formulario de edición */}
       {editingUser && (
         <form
           onSubmit={handleUpdate}
@@ -150,8 +167,7 @@ export const AdminUsers = () => {
         </form>
       )}
     </div>
-);
-
-    }
+  );
+};
 
 export default AdminUsers;

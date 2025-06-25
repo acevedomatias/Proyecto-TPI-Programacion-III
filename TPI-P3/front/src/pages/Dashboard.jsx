@@ -8,36 +8,55 @@ import atencionImg from '../assets/Atencion.png';
 
 export const Dashboard = ({ userRole }) => {
   const [cabins, setCabins] = useState([]);
+  const [alert, setAlert] = useState({ message: '', type: '' });
   const navigate = useNavigate();
-
- 
 
   useEffect(() => {
     fetch("http://localhost:3000/api/cabin")
       .then((res) => res.json())
       .then((data) => setCabins(data))
-      .catch((error) => console.error("Error al obtener cabañas:", error));
+      .catch((error) => {
+        console.error("Error al obtener cabañas:", error);
+        setAlert({ message: "Error al cargar las cabañas.", type: "danger" });
+      });
   }, []);
+
+  useEffect(() => {
+    if (alert.message) {
+      const timeout = setTimeout(() => setAlert({ message: '', type: '' }), 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [alert]);
 
   const handleReserve = (cabinId, isAvailable) => {
     if (!isAvailable) {
-      alert("Esta cabaña no esta disponible");
-      return
+      setAlert({ message: "Esta cabaña no está disponible.", type: "danger" });
+      return;
     }
     navigate(`/BookingForm/${cabinId}`);
   };
 
   return (
     <div>
-      <CustomNavbar userRole={ userRole }/>
+      <CustomNavbar userRole={userRole} />
+
+      {alert.message && (
+        <div
+          className={`alert alert-${alert.type} position-fixed top-0 end-0 m-4 shadow rounded`}
+          style={{ zIndex: 9999, minWidth: '250px' }}
+          role="alert"
+        >
+          {alert.message}
+        </div>
+      )}
 
       <section id="cabañas" style={{ padding: "4rem 0", minHeight: "100vh" }}>
         <Container>
           <div className="d-flex align-items-center justify-content-center mb-5">
             <div className="linea-titulo me-3"></div>
-              <h2 className="text-center fw-bold m-0" style={{ color: "#2c3e50", whiteSpace: "nowrap" }}>
-                Nuestras Cabañas
-              </h2>
+            <h2 className="text-center fw-bold m-0" style={{ color: "#2c3e50", whiteSpace: "nowrap" }}>
+              Nuestras Cabañas
+            </h2>
             <div className="linea-titulo ms-3"></div>
           </div>
           <Row className="justify-content-center align-items-stretch">
@@ -182,9 +201,6 @@ export const Dashboard = ({ userRole }) => {
         `}</style>
       </section>
 
-
-
-
       <section id="contacto" style={{ padding: "4rem 0", backgroundColor: "#e9ecef", minHeight: "100vh" }}>
         <Container>
           <div className="d-flex align-items-center justify-content-center mb-5">
@@ -270,8 +286,6 @@ export const Dashboard = ({ userRole }) => {
           }
         `}</style>
       </section>
-
-
     </div>
   )
 }
